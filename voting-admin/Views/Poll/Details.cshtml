@@ -1,0 +1,19 @@
+@model PollViewModel
+
+@{
+    ViewBag.Title = "Poll - " + Model.Name;
+}
+
+<h2>@Model.Name</h2>
+
+<div>
+    <p>
+        <em>Id:</em>
+        @Model.Id
+    </p>
+    <p>
+        <em>Description:</em>
+        @Model.Description
+    </p>
+
+</div>
