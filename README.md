@@ -1,2 +1,2 @@
 # voting
-Simple voting system
+Simple voting system for testing purposes
