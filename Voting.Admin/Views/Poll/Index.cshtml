@@ -1,0 +1,23 @@
+@model IEnumerable<Poll>
+@{
+    ViewData["Title"] = "Polls List";
+}
+
+<div class="row">
+    <div class="col-md-10">
+        <h2>Polls</h2>
+        <ul>
+            @foreach (var poll in Model)
+            {
+                <li>
+                    <h5>
+                    <a asp-controller="Poll" asp-action="Details" asp-route-id="@poll.Id">
+                        @poll.Name
+                    </a>
+                    : @poll.Description
+                    </h5>
+                </li>
+            }
+        </ul>
+      </div>
+</div>
