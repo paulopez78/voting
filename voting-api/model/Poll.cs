@@ -6,7 +6,7 @@ namespace voting.api.model
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string Description { get; set; }        
         public ICollection<VoteOption> VoteOptions { get; set; }
     }
 }

@@ -1,7 +1,6 @@
 using Microsoft.AspNet.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Data.Entity;
-
 using voting.api.model;
 
 namespace voting.api
@@ -10,16 +9,24 @@ namespace voting.api
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvcCore().AddJsonFormatters();
+            services.AddMvcCore()
+                    .AddApiExplorer()
+                    .AddJsonFormatters();
+
             services.AddEntityFramework()
-                    .AddInMemoryDatabase() 
+                    .AddInMemoryDatabase()
                     .AddDbContext<VotingContext>(options =>
-                            options.UseInMemoryDatabase()); ;
+                            options.UseInMemoryDatabase());
+
+            services.AddSwaggerGen();
         }
 
         public void Configure(IApplicationBuilder app)
         {
             app.UseMvc();
+            app.UseSwaggerGen();
+            app.UseSwaggerUi();
+
             SampleData.Initialize(app.ApplicationServices);
         }
 

@@ -10,6 +10,8 @@
     "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
     "Microsoft.Aspnet.Mvc.Core": "6.0.0-rc1-final",
     "Microsoft.AspNet.Mvc.Formatters.Json": "6.0.0-rc1-final",
+    "Swashbuckle.SwaggerGen": "6.0.0-rc1-final",
+    "Swashbuckle.SwaggerUi" : "6.0.0-rc1-final",
     "EntityFramework.Core": "7.0.0-rc1-final",
     "EntityFramework.InMemory": "7.0.0-rc1-final",
     "Microsoft.Dnx.Watcher": "1.0.0-rc1-final"
@@ -18,6 +20,7 @@
     "web": "Microsoft.AspNet.Server.Kestrel"
   },
   "frameworks": {
-    "dnxcore50": {}
+    "dnxcore50": {
+        }
   }
 }

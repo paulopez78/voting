@@ -16,38 +16,40 @@ namespace voting.api.controllers
             this._votingContext = votingContext;
         }
 
-        // GET: api/values
         [HttpGet]
         public IEnumerable<Poll> Get()
         {
             return this._votingContext.Polls.Include(x => x.VoteOptions);
         }
 
-        // GET api/values/5
         [HttpGet("{id}")]
         public Poll Get(int id)
         {
-            return this._votingContext.Polls
-                          .Include(x => x.VoteOptions)
-                          .FirstOrDefault(x => x.Id == id);
+            return this._votingContext.Polls.Include(x => x.VoteOptions).FirstOrDefault(x => x.Id == id);
         }
 
-        // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody]Poll poll)
         {
+            _votingContext.Add(poll);
+            _votingContext.SaveChanges();
         }
 
-        // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]Poll poll)
         {
+            var existingPoll = this._votingContext.Polls.FirstOrDefault(x => x.Id == id);
+            _votingContext.Remove(existingPoll);
+            _votingContext.Add(poll);
+            _votingContext.SaveChanges();
         }
 
-        // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            var poll = this._votingContext.Polls.FirstOrDefault(x => x.Id == id);
+            _votingContext.Remove(poll);
+            _votingContext.SaveChanges();
         }
     }
 }

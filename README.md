@@ -1,1 +1,2 @@
 # voting
+Simple voting system

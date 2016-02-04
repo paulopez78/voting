@@ -6,8 +6,10 @@ namespace voting.api.model
     {
         public DbSet<Poll> Polls { get; set; }
 
+        public DbSet<Vote> Votes { get; set; }
+
         public VotingContext()
-        { 
+        {
         }
     }
 }
