@@ -3,37 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
+using Microsoft.Extensions.Logging;
 
 using Voting.Model;
+using Voting.Admin.Services;
 
 namespace Voting.Admin.Controllers
 {
     public class PollController : Controller
     {
-        public IActionResult Index()
+        private readonly IVotingService _votingService;
+        public PollController(IVotingService votingservice)
         {
-            var model = new List<Poll>(){
-              new Poll
-              {
-                Id = 1,
-                Name = "Language",
-                Description = "Your favourite language"
-              }
-            };
+            _votingService = votingservice;
+        }
 
-            // rest api call
+        public async Task<IActionResult> Index()
+        {
+            var model = await _votingService.Get();
             return View(model);
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var model = new Poll
-            {
-                Id = 1,
-                Name = "Language",
-                Description = "Your favourite language"
-            };
-            // rest api call
+            var model = await _votingService.Get(id);
             return View(model);
         }
 
@@ -43,15 +36,18 @@ namespace Voting.Admin.Controllers
         }
 
         [HttpPost]
-        public void Create([FromBody] Poll poll)
+        public async Task<IActionResult> Create(Poll poll)
         {
-
+            poll.VoteOptions = new List<VoteOption>();
+            await _votingService.SaveOrUpdate(poll);
+            return RedirectToAction(nameof(PollController.Index));
         }
 
         [HttpPost]
-        public void Remove(int id)
+        public async Task<IActionResult> Remove(int id)
         {
-
+            await _votingService.Remove(id);
+            return RedirectToAction(nameof(PollController.Index));
         }
 
         public IActionResult Error()

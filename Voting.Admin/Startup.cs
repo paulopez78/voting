@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
+using Voting.Admin.Services;
+
 namespace Voting.Admin
 {
     public class Startup
@@ -28,6 +30,16 @@ namespace Voting.Admin
         {
             // Add framework services.
             services.AddMvc();
+            services.AddOptions();
+            services.AddLogging();
+
+            services.Configure<VotingApiOptions>(apiOptions =>
+            {
+                //apiOptions.Url = Configuration["RESTAPI_IP"];
+                apiOptions.Url = "http://192.168.99.100";
+            });
+
+            services.AddScoped<IVotingService, VotingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
