@@ -1,10 +1,12 @@
 api:
- image: paulopez/voting-api
+ build: .
+ dockerfile: DockerfileVotingApi
  ports:
   - 5000:5000
 
 admin:
- image: paulopez/voting-admin
+ build: .
+ dockerfile: DockerfileVotingAdmin
  ports:
   - 8080:5000
  links:

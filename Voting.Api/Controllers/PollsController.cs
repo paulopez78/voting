@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Data.Entity;
 using Microsoft.AspNet.Mvc;
 using Voting.Model;
@@ -14,19 +15,21 @@ namespace Voting.Api.Controllers
 
         public PollsController(VotingContext votingContext)
         {
-            this._votingContext = votingContext;
+            _votingContext = votingContext;
         }
 
         [HttpGet]
-        public IEnumerable<Poll> Get()
+        public async Task<IEnumerable<Poll>> Get()
         {
-            return this._votingContext.Polls.Include(x => x.VoteOptions);
+            return await _votingContext.Polls.Include(x => x.VoteOptions).ToListAsync();
         }
 
         [HttpGet("{id}")]
-        public Poll Get(string id)
+        public async Task<Poll> Get(string id)
         {
-            return this._votingContext.Polls.Include(x => x.VoteOptions).FirstOrDefault(x => x.Id == id);
+            return await _votingContext.Polls
+                        .Include(x => x.VoteOptions)
+                        .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         [HttpPost]
@@ -37,20 +40,20 @@ namespace Voting.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public void Put(string id, [FromBody]Poll poll)
+        public async Task Put(string id, [FromBody]Poll poll)
         {
-            var existingPoll = this._votingContext.Polls.FirstOrDefault(x => x.Id == id);
+            var existingPoll = await _votingContext.Polls.FirstOrDefaultAsync(x => x.Id == id);
             _votingContext.Remove(existingPoll);
             _votingContext.Add(poll);
-            _votingContext.SaveChanges();
+            await _votingContext.SaveChangesAsync();
         }
 
         [HttpDelete("{id}")]
-        public void Delete(string id)
+        public async Task Delete(string id)
         {
-            var poll = this._votingContext.Polls.FirstOrDefault(x => x.Id == id);
+            var poll = await _votingContext.Polls.FirstOrDefaultAsync(x => x.Id == id);
             _votingContext.Remove(poll);
-            _votingContext.SaveChanges();
+            await _votingContext.SaveChangesAsync();
         }
     }
 }
