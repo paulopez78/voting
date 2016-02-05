@@ -1,0 +1,11 @@
+api:
+ image: paulopez/voting-api
+ ports:
+  - 5000:5000
+
+admin:
+ image: paulopez/voting-admin
+ ports:
+  - 8080:5000
+ links:
+  - api
