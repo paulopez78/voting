@@ -1,8 +1,15 @@
+using System;
+
 namespace Voting.Model
 {
     public class VoteOption
     {
-      public int Id { get; set; }
-      public string Name { get; set; }
+        public VoteOption()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+
+        public string Id { get; set; }
+        public string Name { get; set; }
     }
 }

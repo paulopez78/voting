@@ -10,9 +10,9 @@ namespace Voting.Admin.Services
     {
         Task<IEnumerable<Poll>> Get();
 
-        Task<Poll> Get(int id);
+        Task<Poll> Get(string id);
 
-        Task Remove(int id);
+        Task Remove(string id);
 
         Task SaveOrUpdate(Poll poll);
     }

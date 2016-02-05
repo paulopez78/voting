@@ -27,13 +27,13 @@ namespace Voting.Admin.Services
             return JsonConvert.DeserializeObject<IEnumerable<Poll>>(json);
         }
 
-        public async Task<Poll> Get(int id)
+        public async Task<Poll> Get(string id)
         {
             var json = await GetPoll  (id);
             return JsonConvert.DeserializeObject<Poll>(json);
         }
 
-        public async Task Remove(int id)
+        public async Task Remove(string id)
         {
             await Task.FromResult(true);
         }
@@ -43,7 +43,7 @@ namespace Voting.Admin.Services
             await Create(poll);
         }
 
-        private async Task<string> GetPoll(int? id = null)
+        private async Task<string> GetPoll(string id = null)
         {
             using (var client = new HttpClient())
             {
@@ -51,7 +51,7 @@ namespace Voting.Admin.Services
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var request = id.HasValue ? $"/polls/{id.Value}" : "/polls";
+                var request = !string.IsNullOrEmpty(id) ? $"/polls/{id}":"/polls";
                 _logger.LogInformation($"{_apiOptions.Url}{request}");
                 var response = await client.GetAsync(request);
                 if (response.IsSuccessStatusCode)

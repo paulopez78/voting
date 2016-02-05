@@ -15,5 +15,12 @@
         <em>Description:</em>
         @Model.Description
     </p>
-
+    <ul>
+        @foreach (var option in Model.VoteOptions)
+        {
+            <li>
+                <h5>@option.Name</h5>
+            </li>
+        }
+    </ul>
 </div>

@@ -36,7 +36,7 @@ namespace Voting.Admin
             services.Configure<VotingApiOptions>(apiOptions =>
             {
                 //apiOptions.Url = Configuration["RESTAPI_IP"];
-                apiOptions.Url = "http://192.168.99.100";
+                apiOptions.Url = "http://192.168.99.100:5000";
             });
 
             services.AddScoped<IVotingService, VotingService>();

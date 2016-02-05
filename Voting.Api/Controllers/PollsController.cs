@@ -24,7 +24,7 @@ namespace Voting.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public Poll Get(int id)
+        public Poll Get(string id)
         {
             return this._votingContext.Polls.Include(x => x.VoteOptions).FirstOrDefault(x => x.Id == id);
         }
@@ -37,7 +37,7 @@ namespace Voting.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]Poll poll)
+        public void Put(string id, [FromBody]Poll poll)
         {
             var existingPoll = this._votingContext.Polls.FirstOrDefault(x => x.Id == id);
             _votingContext.Remove(existingPoll);
@@ -46,7 +46,7 @@ namespace Voting.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Delete(string id)
         {
             var poll = this._votingContext.Polls.FirstOrDefault(x => x.Id == id);
             _votingContext.Remove(poll);

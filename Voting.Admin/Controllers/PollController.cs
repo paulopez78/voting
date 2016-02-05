@@ -24,7 +24,7 @@ namespace Voting.Admin.Controllers
             return View(model);
         }
 
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(string id)
         {
             var model = await _votingService.Get(id);
             return View(model);
@@ -38,13 +38,12 @@ namespace Voting.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Poll poll)
         {
-            poll.VoteOptions = new List<VoteOption>();
             await _votingService.SaveOrUpdate(poll);
             return RedirectToAction(nameof(PollController.Index));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Remove(int id)
+        public async Task<IActionResult> Remove(string id)
         {
             await _votingService.Remove(id);
             return RedirectToAction(nameof(PollController.Index));
