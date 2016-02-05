@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  
+  ul
+    each poll in model
+      li= poll.Name
+      
+  ul#messages-area
+    input(type='text',name='new-message',id='new-message')        
+    button(onclick="sendFunction()") Click
+  
+  script(src="/socket.io/socket.io.js")
+  script.
+    var socket = io();
+    function sendFunction() {
+      socket.emit('new message', $('#new-message').val());
+      $('#new-message').val('');
+    }
+    socket.on('chat message', function(msg){
+      $('#messages-area').append($('<li>').text(msg));
+    });
