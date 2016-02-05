@@ -18,6 +18,7 @@ namespace Voting.Admin.Services
         public VotingService(IOptions<VotingApiOptions> apiOptions, ILogger<VotingService> logger)
         {
             this._apiOptions = apiOptions.Value;
+            this._apiOptions.Url = _apiOptions.Url.Replace("tcp", "http");
             this._logger = logger;
         }
 
