@@ -33,10 +33,10 @@ namespace Voting.Api.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody]Poll poll)
+        public async Task Post([FromBody]Poll poll)
         {
             _votingContext.Add(poll);
-            _votingContext.SaveChanges();
+            await _votingContext.SaveChangesAsync();
         }
 
         [HttpPut("{id}")]

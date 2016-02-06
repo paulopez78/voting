@@ -3,6 +3,21 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+a.list-group-item {
+    height:auto;
+    min-height:220px;
 }
+a.list-group-item.active small {
+    color:#fff;
+}
+a.list-group-item  {
+    font-size: 110px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.5)
+}
+.vs-title{
+  font-size: 50px;
+}
+.fa { font-size: 200px;color:#FFFFFF;}
+.social a { text-decoration:none; }
+.twitter { background-color:#00acee; border-radius:4px;box-shadow: 0 5px 15px rgba(0,0,0,.5)}
+.facebook-like { background-color:#3b5998;border-radius:4px;margin-top:-3px;box-shadow: 0 5px 15px rgba(0,0,0,.5)}

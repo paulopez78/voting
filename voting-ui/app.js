@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var api = require("./routes/apiclient");
 var routes = require('./routes/index');
 
 var app = express();
@@ -56,13 +56,20 @@ app.use(function(err, req, res, next) {
   });
 });
 
+var option0 = 0;
+var option1 = 0;
+
 // start listen with socket.io
 app.io.on('connection', function(socket){
-  console.log('a user connected');
-
-  socket.on('new message', function(msg){
-    console.log('new message: ' + msg);
-    app.io.emit('chat message', msg);
+  socket.on('vote', function(msg){
+      console.log(msg)
+      if (msg.option == 0){
+        ++option0;
+      }
+      if (msg.option == 1){
+        ++option1;
+      }
+      app.io.emit('results', {option0: option0, option1: option1});
   });
 });
 

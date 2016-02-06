@@ -1,24 +1,39 @@
 extends layout
-
 block content
-  h1= title
-  p Welcome to #{title}
-  
-  ul
-    each poll in model
-      li= poll.Name
+  hr
+  .container.bootstrap.snippet
+    .row
+      .well
+        h1.text-center.text-primary
+          span.glyphicon.glyphicon-thumbs-up
+          b= " Vote for your favorite " + model.Name
+        .list-group
+          a.list-group-item
+            .col-md-4
+              .media.col-md-12
+                h1.text-center= model.VoteOptions[0].Name
+              .media.col-md-12
+                button.btn.btn-default.btn-lg.btn-block(type="button", 
+                onclick="sendVote(0,'#{model.VoteOptions[0].Id}')") Vote                         
+            .col-md-4.text-center
+                span#option0result.vs-title= model.VoteOptions[0].PerCent
+                span.vs-title %&nbsp;Vs&nbsp;
+                span#option1result.vs-title= model.VoteOptions[1].PerCent
+                span.vs-title %
+            .col-md-4
+                .media.col-md-12
+                  h1.text-center= model.VoteOptions[1].Name
+                .media.col-md-12
+                  button.btn.btn-default.btn-lg.btn-block(type="button", 
+                  onclick="sendVote(1,'#{model.VoteOptions[1].Id}')") Vote                         
       
-  ul#messages-area
-    input(type='text',name='new-message',id='new-message')        
-    button(onclick="sendFunction()") Click
-  
   script(src="/socket.io/socket.io.js")
   script.
     var socket = io();
-    function sendFunction() {
-      socket.emit('new message', $('#new-message').val());
-      $('#new-message').val('');
+    function sendVote(option, id) {
+      socket.emit('vote', {option:option, id:id});
     }
-    socket.on('chat message', function(msg){
-      $('#messages-area').append($('<li>').text(msg));
+    socket.on('results', function(msg){
+      $('#option0result').text(msg.option0);
+      $('#option1result').text(msg.option1);
     });

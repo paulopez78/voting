@@ -1,27 +1,32 @@
 var http = require("http");
+
+var port = process.env.API_PORT_5000_TCP_PORT || "5000"
+var url = process.env.API_PORT_5000_TCP_ADDR || "localhost"
+
 var api = {
-    getPolls: function(url, port, cb){
-      console.log(url);
+    getPolls: function(cb){
       var options = {
         host: url,
         port: port,
-        path: '/polls',
+        path: '/polls/',
         method: 'GET'
       };
 
       http.request(options, function(res) {
-        console.log('STATUS: ' + res.statusCode);
-        console.log('HEADERS: ' + JSON.stringify(res.headers));
         res.setEncoding('utf8');
         res.on('data', function (chunk) {
-          console.log('BODY: ' + chunk);
           cb(JSON.parse(chunk))
         });
       }).end();
     },
 
-    vote: function(url, cb){
-
+    vote: function(cb){
+      var options = {
+        host: url,
+        port: port,
+        path: '/vote/{id}',
+        method: 'POST'
+      };      
     }
 }
 

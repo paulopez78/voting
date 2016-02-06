@@ -11,5 +11,6 @@ namespace Voting.Model
 
         public string Id { get; set; }
         public string Name { get; set; }
+        public int Votes { get; set; }
     }
 }

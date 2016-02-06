@@ -7,7 +7,7 @@ namespace Voting.Api.Model
     {
         public DbSet<Poll> Polls { get; set; }
 
-        public DbSet<Vote> Votes { get; set; }
+        public DbSet<VoteOption> VoteOptions { get; set; }
 
         public VotingContext()
         {
