@@ -20,14 +20,27 @@ var api = {
       }).end();
     },
 
-    vote: function(cb){
+    vote: function(option, cb){
       var options = {
-        host: url,
-        port: port,
-        path: '/vote/{id}',
-        method: 'POST'
-      };      
+          hostname: url,
+            port: port,
+            path: '/vote',
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'}
+          };
+
+      var req = http.request(options, function(res) {
+        res.setEncoding('utf8');
+        res.on('data', function (data) {
+        })
+        res.on('end', function () {
+          cb();
+        })
+      });
+
+      req.write(JSON.stringify({VoteOption:option.id}));
+      req.end();
     }
-}
+  }
 
 module.exports = api;

@@ -6,34 +6,33 @@ block content
       .well
         h1.text-center.text-primary
           span.glyphicon.glyphicon-thumbs-up
-          b= " Vote for your favorite " + model.Name
+          b= " Vote for your favorite " + model.name
         .list-group
           a.list-group-item
             .col-md-4
               .media.col-md-12
-                h1.text-center= model.VoteOptions[0].Name
+                h1.text-center= model.option1.name
               .media.col-md-12
                 button.btn.btn-default.btn-lg.btn-block(type="button", 
-                onclick="sendVote(0,'#{model.VoteOptions[0].Id}')") Vote                         
+                onclick="sendVote(#{JSON.stringify(model.option1)})") Vote                         
             .col-md-4.text-center
-                span#option0result.vs-title= model.VoteOptions[0].PerCent
-                span.vs-title %&nbsp;Vs&nbsp;
-                span#option1result.vs-title= model.VoteOptions[1].PerCent
-                span.vs-title %
+                span(id=model.option1.id).vs-title= model.option1.votes
+                span.vs-title &nbsp;Vs&nbsp;
+                span(id=model.option2.id).vs-title= model.option2.votes
             .col-md-4
                 .media.col-md-12
-                  h1.text-center= model.VoteOptions[1].Name
+                  h1.text-center= model.option2.name
                 .media.col-md-12
                   button.btn.btn-default.btn-lg.btn-block(type="button", 
-                  onclick="sendVote(1,'#{model.VoteOptions[1].Id}')") Vote                         
+                  onclick="sendVote(#{JSON.stringify(model.option2)})") Vote                         
       
   script(src="/socket.io/socket.io.js")
   script.
     var socket = io();
-    function sendVote(option, id) {
-      socket.emit('vote', {option:option, id:id});
+    function sendVote(option) {
+      socket.emit('vote', option);
     }
-    socket.on('results', function(msg){
-      $('#option0result').text(msg.option0);
-      $('#option1result').text(msg.option1);
+    socket.on('voted', function(option){
+      var num = parseInt($("#" + option.id).text()) + 1;   
+      $("#" + option.id).text(num);    
     });

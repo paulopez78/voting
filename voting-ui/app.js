@@ -56,21 +56,13 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var option0 = 0;
-var option1 = 0;
-
-// start listen with socket.io
 app.io.on('connection', function(socket){
-  socket.on('vote', function(msg){
-      console.log(msg)
-      if (msg.option == 0){
-        ++option0;
-      }
-      if (msg.option == 1){
-        ++option1;
-      }
-      app.io.emit('results', {option0: option0, option1: option1});
-  });
+  console.log("connected");
+    socket.on('vote', function(option){
+        api.vote(option, function(){
+          app.io.emit('voted', option);
+        });
+    });
 });
 
 module.exports = app;
