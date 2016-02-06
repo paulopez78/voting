@@ -7,7 +7,7 @@ Run with docker compose
 
 Admin 
 * `http://docker-host-ip:8080`
-Voting ui
+* Voting ui
 * `http://docker-host-ip`
-Voting api
+* Voting api
 * `http://docker-host-ip:500` 
