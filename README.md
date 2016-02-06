@@ -1,13 +1,13 @@
 # voting
 Simple voting system for testing purposes
 
-* Run with docker compose
-`docker-compose build`
-`docker-compose up`
+Run with docker compose
+* `docker-compose build`
+* `docker-compose up`
 
-* Admin
+Admin 
 `http://docker-host-ip:8080`
 * Voting ui
-`http://docker-host-ip`
+* `http://docker-host-ip`
 * Voting api
-`http://docker-host-ip:500` 
+* `http://docker-host-ip:500` 
