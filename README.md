@@ -12,4 +12,4 @@ Voting ui
 * `http://docker-host-ip`
 
 Voting api
-* `http://docker-host-ip:500` 
+* `http://docker-host-ip:5000` 
