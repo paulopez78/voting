@@ -6,8 +6,8 @@ Run with docker compose
 * `docker-compose up`
 
 Admin 
-`http://docker-host-ip:8080`
-* Voting ui
+* `http://docker-host-ip:8080`
+Voting ui
 * `http://docker-host-ip`
-* Voting api
+Voting api
 * `http://docker-host-ip:500` 
