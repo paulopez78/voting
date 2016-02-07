@@ -13,6 +13,10 @@
                     <h5>
                     <a asp-controller="Poll" asp-action="Details" asp-route-id="@poll.Id">
                         @poll.Name
+                        @if(poll.Active)
+                        {
+                          <span>(Running)</span>
+                        }
                     </a>
                     : @poll.Description
                     </h5>

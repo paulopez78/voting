@@ -49,6 +49,13 @@ namespace Voting.Admin.Controllers
             return RedirectToAction(nameof(PollController.Index));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Activate(Poll poll)
+        {
+            await _votingService.Activate(poll.Id);
+            return RedirectToAction(nameof(PollController.Index));
+        }
+
         public IActionResult Error()
         {
             return View();

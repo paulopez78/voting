@@ -24,13 +24,19 @@ namespace Voting.Admin.Services
 
         public async Task<IEnumerable<Poll>> Get()
         {
-            var json = await GetPoll();
+            var json = await GetPoll("/polls");
             return JsonConvert.DeserializeObject<IEnumerable<Poll>>(json);
+        }
+
+        public async Task<Poll> GetActive()
+        {
+            var json = await GetPoll("/polls/active");
+            return JsonConvert.DeserializeObject<Poll>(json);
         }
 
         public async Task<Poll> Get(string id)
         {
-            var json = await GetPoll  (id);
+            var json = await GetPoll($"/polls/{id}");
             return JsonConvert.DeserializeObject<Poll>(json);
         }
 
@@ -39,20 +45,23 @@ namespace Voting.Admin.Services
             await Task.FromResult(true);
         }
 
+        public async Task Activate(string id)
+        {
+            await ActivatePutRequest(id);
+        }
+
         public async Task SaveOrUpdate(Poll poll)
         {
             await Create(poll);
         }
 
-        private async Task<string> GetPoll(string id = null)
+        private async Task<string> GetPoll(string request)
         {
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(_apiOptions.Url);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                var request = !string.IsNullOrEmpty(id) ? $"/polls/{id}":"/polls";
                 _logger.LogInformation($"{_apiOptions.Url}{request}");
                 var response = await client.GetAsync(request);
                 if (response.IsSuccessStatusCode)
@@ -78,6 +87,28 @@ namespace Voting.Admin.Services
                 _logger.LogInformation($"{_apiOptions.Url}{request}");
                 _logger.LogInformation($"{json}");
                 var response = await client.PostAsync(request,
+                                                        new StringContent(json,
+                                                        System.Text.Encoding.UTF8,"application/json"));
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception();
+                }
+            }
+        }
+
+        private async Task ActivatePutRequest(string id)
+        {
+            using (var client = new HttpClient())
+            {
+                var json = JsonConvert.SerializeObject(id);
+                client.BaseAddress = new Uri(_apiOptions.Url);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                var request = $"/polls/{id}/activate";
+                _logger.LogInformation($"{_apiOptions.Url}{request}");
+                _logger.LogInformation($"{json}");
+                var response = await client.PutAsync(request,
                                                         new StringContent(json,
                                                         System.Text.Encoding.UTF8,"application/json"));
 

@@ -10,10 +10,14 @@ namespace Voting.Admin.Services
     {
         Task<IEnumerable<Poll>> Get();
 
+        Task<Poll> GetActive();
+
         Task<Poll> Get(string id);
 
         Task Remove(string id);
 
         Task SaveOrUpdate(Poll poll);
+
+        Task Activate(string id);
     }
 }

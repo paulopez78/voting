@@ -18,6 +18,7 @@ namespace Voting.Api.Model
               {
                   Name = "Language",
                   Description = "Programming language",
+                  Active = true,
                   VoteOptions = new List<VoteOption>()
                   {
                         new VoteOption
@@ -34,6 +35,7 @@ namespace Voting.Api.Model
               {
                   Name = "Profile",
                   Description = "IT skills profile",
+                  Active = false,
                   VoteOptions = new List<VoteOption>()
                   {
                         new VoteOption
