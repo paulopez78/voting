@@ -29,7 +29,6 @@ var api = {
             headers: {'Content-Type': 'application/json'}
           };
 
-      console.log(options)
       var req = http.request(options, function(res) {
         res.setEncoding('utf8');
         res.on('data', function (data) {

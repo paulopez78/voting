@@ -1,6 +1,7 @@
 FROM microsoft/aspnet:1.0.0-rc1-update1-coreclr
 
-COPY . /app
+COPY ./Voting.Api /app/Voting.Api
+COPY ./Voting.Model /app/Voting.Model
 
 WORKDIR /app/Voting.Api
 
