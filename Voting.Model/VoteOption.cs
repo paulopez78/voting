@@ -6,10 +6,9 @@ namespace Voting.Model
     {
         public VoteOption()
         {
-            Id = Guid.NewGuid().ToString();
         }
 
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public int Votes { get; set; }
     }

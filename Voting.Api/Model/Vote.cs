@@ -2,6 +2,7 @@ namespace Voting.Api.Model
 {
     public class Vote
     {
-        public string VoteOption { get; set; }
+        public int VoteOption { get; set; }
     }
 }
+	    

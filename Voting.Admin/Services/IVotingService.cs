@@ -12,12 +12,12 @@ namespace Voting.Admin.Services
 
         Task<Poll> GetActive();
 
-        Task<Poll> Get(string id);
+        Task<Poll> Get(int id);
 
-        Task Remove(string id);
+        Task Remove(int id);
 
         Task SaveOrUpdate(Poll poll);
 
-        Task Activate(string id);
+        Task Activate(int id);
     }
 }

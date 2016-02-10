@@ -34,18 +34,18 @@ namespace Voting.Admin.Services
             return JsonConvert.DeserializeObject<Poll>(json);
         }
 
-        public async Task<Poll> Get(string id)
+        public async Task<Poll> Get(int id)
         {
             var json = await GetPoll($"/polls/{id}");
             return JsonConvert.DeserializeObject<Poll>(json);
         }
 
-        public async Task Remove(string id)
+        public async Task Remove(int id)
         {
             await Task.FromResult(true);
         }
 
-        public async Task Activate(string id)
+        public async Task Activate(int id)
         {
             await ActivatePutRequest(id);
         }
@@ -97,7 +97,7 @@ namespace Voting.Admin.Services
             }
         }
 
-        private async Task ActivatePutRequest(string id)
+        private async Task ActivatePutRequest(int id)
         {
             using (var client = new HttpClient())
             {

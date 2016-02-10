@@ -16,6 +16,7 @@ namespace Voting.Api.Controllers
         public PollsController(VotingContext votingContext)
         {
             _votingContext = votingContext;
+            
         }
 
         [HttpGet]
@@ -33,7 +34,7 @@ namespace Voting.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<Poll> Get(string id)
+        public async Task<Poll> Get(int id)
         {
             return await _votingContext.Polls
                         .Include(x => x.VoteOptions)
@@ -48,7 +49,7 @@ namespace Voting.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task Put(string id, [FromBody]Poll poll)
+        public async Task Put(int id, [FromBody]Poll poll)
         {
             var existingPoll = await _votingContext.Polls.FirstOrDefaultAsync(x => x.Id == id);
             _votingContext.Remove(existingPoll);
@@ -57,18 +58,17 @@ namespace Voting.Api.Controllers
         }
 
         [HttpPut("{id}/Vote")]
-        public async Task Vote(string id, [FromBody]Vote vote)
+        public async Task Vote(int id, [FromBody]Vote vote)
         {
-            var voteOption = await _votingContext
-                                  .VoteOptions
-                                  .FirstOrDefaultAsync(x => x.Id == vote.VoteOption);
-
+            var poll = await _votingContext.Polls.FirstOrDefaultAsync(x => x.Id == id);
+            var voteOption = poll.VoteOptions.FirstOrDefault(x => x.Id == vote.VoteOption);                      
+                                  
             ++voteOption.Votes;
             await _votingContext.SaveChangesAsync();
         }
 
         [HttpPut("{id}/Activate")]
-        public async Task Activate(string id)
+        public async Task Activate(int id)
         {
             var existingPoll = await _votingContext.Polls.FirstOrDefaultAsync(x => x.Id == id);
             await _votingContext.Polls.ForEachAsync(x => x.Deactivate());
@@ -77,7 +77,7 @@ namespace Voting.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task Delete(string id)
+        public async Task Delete(int id)
         {
             var poll = await _votingContext.Polls.FirstOrDefaultAsync(x => x.Id == id);
             _votingContext.Remove(poll);
