@@ -1,9 +1,16 @@
 #!/bin/bash
-docker build -t paulopez/voting-api:latest -f ./DockerfileVotingApi .
-docker push paulopez/voting-api
-
-docker build -t paulopez/voting-admin:latest -f ./DockerfileVotingAdmin .
+cd ./Voting.Admin
+dnu restore
+dnu publish
+docker build -t paulopez/voting-admin:latest .
 docker push paulopez/voting-admin
 
-docker build -t paulopez/voting-ui:latest -f ./voting-ui/Dockerfile ./voting-ui
+cd ../Voting.Api
+dnu restore
+dnu publish
+docker build -t paulopez/voting-api:latest .
+docker push paulopez/voting-api
+
+cd ../voting-ui
+docker build -t paulopez/voting-ui:latest .
 docker push paulopez/voting-ui

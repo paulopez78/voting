@@ -1,12 +1,10 @@
 api:
- build: .
- dockerfile: DockerfileVotingApi
+ build: ./Voting.Api
  ports:
   - 5000:5000
 
 admin:
- build: .
- dockerfile: DockerfileVotingAdmin
+ build: ./Voting.Admin
  ports:
   - 8080:5000
  links:

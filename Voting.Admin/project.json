@@ -24,7 +24,7 @@
   },
 
   "commands": {
-    "web": "Microsoft.AspNet.Server.Kestrel --ASPNET_ENV development --server.urls http://0.0.0.0:8080"
+    "web": "Microsoft.AspNet.Server.Kestrel"
   },
 
   "frameworks": {
