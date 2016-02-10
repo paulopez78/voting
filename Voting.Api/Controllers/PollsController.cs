@@ -16,7 +16,7 @@ namespace Voting.Api.Controllers
         public PollsController(VotingContext votingContext)
         {
             _votingContext = votingContext;
-            
+
         }
 
         [HttpGet]
@@ -60,9 +60,10 @@ namespace Voting.Api.Controllers
         [HttpPut("{id}/Vote")]
         public async Task Vote(int id, [FromBody]Vote vote)
         {
-            var poll = await _votingContext.Polls.FirstOrDefaultAsync(x => x.Id == id);
-            var voteOption = poll.VoteOptions.FirstOrDefault(x => x.Id == vote.VoteOption);                      
-                                  
+            var poll = await _votingContext.Polls.Include(x => x.VoteOptions)
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+            var voteOption = poll.VoteOptions.FirstOrDefault(x => x.Id == vote.VoteOption);
             ++voteOption.Votes;
             await _votingContext.SaveChangesAsync();
         }
