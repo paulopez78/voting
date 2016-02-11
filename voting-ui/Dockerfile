@@ -1,10 +1,11 @@
 FROM node:slim
 
+RUN apt-get update && apt-get install git -y
+
 COPY . /app
 WORKDIR /app
 
-RUN npm install
-RUN npm install bower -g
+RUN npm update && npm install -g bower
 RUN bower --allow-root install
 
 EXPOSE 3000/tcp
