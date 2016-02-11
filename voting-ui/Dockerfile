@@ -2,7 +2,10 @@ FROM node:slim
 
 COPY . /app
 WORKDIR /app
-RUN ["npm", "update"]
+
+RUN npm install
+RUN npm install bower -g
+RUN bower --allow-root install
 
 EXPOSE 3000/tcp
 
